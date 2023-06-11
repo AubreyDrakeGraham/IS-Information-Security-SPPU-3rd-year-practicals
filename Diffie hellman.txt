@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Diffie-Hellman Key Exchange</title>
+</head>
+<body>
+<h1>Diffie-Hellman Key Exchange</h1>
+<p>Enter your private key:</p>
+<input type="text" id="privateKey">
+<br>
+<button onclick="generatePublicKey()">Generate Public 
+Key</button>
+<p>Public key:</p>
+<textarea id="publicKey" rows="5" cols="50"
+readonly></textarea>
+<br>
+<p>Enter other party's public key:</p>
+<textarea id="otherPublicKey" rows="5"
+cols="50"></textarea>
+<br>
+<button onclick="generateSharedSecret()">Generate Shared 
+Secret</button>
+<p>Shared secret:</p>
+<textarea id="sharedSecret" rows="5" cols="50"
+readonly></textarea>
+<script>
+const sharedPrime = 23;
+const sharedBase = 5;
+// Generate public and private keys
+function generatePublicKey() {
+const privateKey = 
+parseInt(document.getElementById("privateKey").value);
+const publicKey = Math.pow(sharedBase, 
+privateKey) % sharedPrime;
+document.getElementById("publicKey").value = 
+publicKey;
+sessionStorage.setItem("privateKey", 
+privateKey);
+}
+// Generate shared secret key
+function generateSharedSecret() {
+const otherPublicKey = 
+parseInt(document.getElementById("otherPublicKey").value);
+const privateKey = 
+sessionStorage.getItem("privateKey");
+const sharedSecret = Math.pow(otherPublicKey, 
+privateKey) % sharedPrime;
+document.getElementById("sharedSecret").value = 
+sharedSecret;
+}
+</script>
+</body>
+</html>
